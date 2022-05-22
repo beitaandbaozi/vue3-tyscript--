@@ -7,10 +7,8 @@
       >{{ title }}</a
     >
 
-    <ul class="dropdown-menu" style="display: block;" v-if="isOpen">
-      <li><a class="dropdown-item" href="#">Action</a></li>
-      <li><a class="dropdown-item" href="#">Another action</a></li>
-      <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <ul class="dropdown-menu" style="display: block" v-if="isOpen">
+      <slot></slot>
     </ul>
   </div>
 </template>
