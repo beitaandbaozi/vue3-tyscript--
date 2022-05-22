@@ -16,8 +16,8 @@
       <li class="list-inline-item">
         <dropdown :title="`你好 ${user.name}`">
           <dropdown-item>新建文章</dropdown-item>
-          <dropdown-item disabled>新建文章</dropdown-item>
-          <dropdown-item>新建文章</dropdown-item>
+          <dropdown-item disabled>编辑资料</dropdown-item>
+          <dropdown-item>退出登录</dropdown-item>
         </dropdown>
       </li>
     </ul>

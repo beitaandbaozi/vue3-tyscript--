@@ -18,7 +18,7 @@ export default defineComponent({
 <style>
 .is-disabled * {
   color: #6c757d;
-  cursor:not-allowed;
+  pointer-events: none;
   background-color: transparent;
 }
 </style>
