@@ -1,11 +1,20 @@
 <template>
-  <ul>
-    <li v-for="item in list" :key="item.id">
-      <img :src="item.avatar" :alt="item.title" />
-      <h5>{{ item.title }}</h5>
-      <p>{{ item.description }}</p>
-    </li>
-  </ul>
+  <div class="container">
+    <div class="row">
+      <div class="col-4 mb-4" v-for="item in list" :key="item.id">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body text-center">
+            <img :src="item.avatar"  :alt="item.title" class="rounded-circle border border-light w-25 my-3"/>
+            <h5 class="card-title">{{ item.title }}</h5>
+            <p class="card-text text-left">
+              {{ item.description }}
+            </p>
+            <a href="#" class="btn btn-outline-primary">进入专栏</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
