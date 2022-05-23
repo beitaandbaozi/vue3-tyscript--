@@ -5,6 +5,7 @@
       :class="{ 'is-invalid': inputRef.error, 'is-valid': validFlag }"
       v-model="inputRef.value"
       @blur="validateRules"
+      @input="updateValue"
     />
     <div class="form-text invalid-feedback" v-if="inputRef.error">
       {{ inputRef.message }}
@@ -24,15 +25,24 @@ export default defineComponent({
   props: {
     rules: {
       type: Array as PropType<RulesProp>
+    },
+    modelValue: {
+      type: String
     }
   },
-  setup (props) {
+  setup (props, { emit }) {
     const validFlag = ref(false)
     const inputRef = reactive({
-      value: '',
+      value: props.modelValue || '',
       error: false,
       message: ''
     })
+    // 双向数据绑定
+    const updateValue = (e: Event) => {
+      const targetValue = (e.target as HTMLInputElement).value
+      inputRef.value = targetValue
+      emit('update:modelValue', targetValue)
+    }
     const validateRules = () => {
       if (props.rules) {
         const allPassed = props.rules.every((item) => {
@@ -54,7 +64,7 @@ export default defineComponent({
         validFlag.value = !inputRef.error
       }
     }
-    return { inputRef, validateRules, validFlag }
+    return { inputRef, validateRules, validFlag, updateValue }
   }
 })
 </script>

@@ -6,14 +6,18 @@
     <form>
       <div class="mb-3">
         <label class="form-label">Email address</label>
-        <validate-input :rules="emailRules"></validate-input>
+        <validate-input
+          :rules="emailRules"
+          v-model="emailValue"
+        ></validate-input>
+        {{emailValue}}
       </div>
     </form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
@@ -64,10 +68,12 @@ export default defineComponent({
     ValidateInput
   },
   setup () {
+    const emailValue = ref('BeiTa')
     return {
       list: testData,
       userData,
-      emailRules
+      emailRules,
+      emailValue
     }
   }
 })
