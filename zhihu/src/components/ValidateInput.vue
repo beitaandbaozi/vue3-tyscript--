@@ -6,6 +6,7 @@
       v-model="inputRef.value"
       @blur="validateRules"
       @input="updateValue"
+      v-bind="$attrs"
     />
     <div class="form-text invalid-feedback" v-if="inputRef.error">
       {{ inputRef.message }}
@@ -30,6 +31,7 @@ export default defineComponent({
       type: String
     }
   },
+  inheritAttrs: false,
   setup (props, { emit }) {
     const validFlag = ref(false)
     const inputRef = reactive({

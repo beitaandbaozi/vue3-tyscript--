@@ -5,19 +5,24 @@
     <!-- 表单 -->
     <form>
       <div class="mb-3">
-        <label class="form-label">Email address</label>
+        <label class="form-label">邮箱地址</label>
         <validate-input
           :rules="emailRules"
-          v-model="emailValue"
+          v-model="loginData.email"
+          type="text"
+          placeholder="请输入邮箱地址"
         ></validate-input>
-        {{emailValue}}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">密码</label>
+        <validate-input v-model="loginData.password" type="password" placeholder="请输入密码"></validate-input>
       </div>
     </form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
@@ -68,12 +73,15 @@ export default defineComponent({
     ValidateInput
   },
   setup () {
-    const emailValue = ref('BeiTa')
+    const loginData = reactive({
+      email: '',
+      password: ''
+    })
     return {
       list: testData,
       userData,
       emailRules,
-      emailValue
+      loginData
     }
   }
 })
