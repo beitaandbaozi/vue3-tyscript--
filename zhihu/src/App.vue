@@ -9,7 +9,7 @@
         <label class="form-label">邮箱地址</label>
         <validate-input
           :rules="emailRules"
-          v-model="loginData.email"
+          v-model="emailValue"
           type="text"
           placeholder="请输入邮箱地址"
         ></validate-input>
@@ -18,7 +18,8 @@
       <div class="mb-3">
         <label class="form-label">密码</label>
         <validate-input
-          v-model="loginData.password"
+          :rules="passwordRules"
+          v-model="passwordValue"
           type="password"
           placeholder="请输入密码"
         ></validate-input>
@@ -31,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
@@ -41,6 +42,7 @@ const emailRules: RulesProp = [
   { type: 'required', message: '电子邮箱地址不能为空' },
   { type: 'email', message: '请输入正确的电子邮箱格式' }
 ]
+const passwordRules: RulesProp = [{ type: 'required', message: '请输入密码' }]
 const userData: UserProps = {
   isLogin: true,
   name: 'BeiTa'
@@ -84,18 +86,23 @@ export default defineComponent({
     ValidateForm
   },
   setup () {
-    const loginData = reactive({
-      email: '123@test.com',
-      password: '123456'
-    })
+    // const loginData = reactive({
+    //   email: '',
+    //   password: ''
+    // })
+    const emailValue = ref('')
+    const passwordValue = ref('')
     const onSubmitForm = (result: boolean) => {
       console.log(result)
+      // result的值为 true时  表示通过
     }
     return {
       list: testData,
       userData,
       emailRules,
-      loginData,
+      emailValue,
+      passwordValue,
+      passwordRules,
       onSubmitForm
     }
   }

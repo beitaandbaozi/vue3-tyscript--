@@ -4,7 +4,7 @@
       class="form-control"
       :class="{ 'is-invalid': inputRef.error, 'is-valid': validFlag }"
       v-model="inputRef.value"
-      @blur="validateRules"
+      @blur="validateInput"
       @input="updateValue"
       v-bind="$attrs"
     />
@@ -46,7 +46,7 @@ export default defineComponent({
       inputRef.value = targetValue
       emit('update:modelValue', targetValue)
     }
-    const validateRules = () => {
+    const validateInput = () => {
       if (props.rules) {
         const allPassed = props.rules.every((item) => {
           let passed = true
@@ -65,12 +65,14 @@ export default defineComponent({
         })
         inputRef.error = !allPassed
         validFlag.value = !inputRef.error
+        return allPassed
       }
+      return true
     }
     onMounted(() => {
-      emitter.emit('form-item-created', inputRef.value)
+      emitter.emit('form-item-created', validateInput)
     })
-    return { inputRef, validateRules, validFlag, updateValue }
+    return { inputRef, validateInput, validFlag, updateValue }
   }
 })
 </script>
