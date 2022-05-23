@@ -14,7 +14,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { defineComponent, PropType, reactive, ref, onMounted } from 'vue'
+import { emitter } from './ValidateForm.vue'
 const emailReg =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 interface RuleProp {
@@ -66,6 +67,9 @@ export default defineComponent({
         validFlag.value = !inputRef.error
       }
     }
+    onMounted(() => {
+      emitter.emit('form-item-created', inputRef.value)
+    })
     return { inputRef, validateRules, validFlag, updateValue }
   }
 })

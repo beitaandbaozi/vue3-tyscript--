@@ -85,8 +85,8 @@ export default defineComponent({
   },
   setup () {
     const loginData = reactive({
-      email: '',
-      password: ''
+      email: '123@test.com',
+      password: '123456'
     })
     const onSubmitForm = (result: boolean) => {
       console.log(result)
