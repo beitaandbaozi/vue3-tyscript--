@@ -2,11 +2,29 @@
   <div class="container">
     <global-header :user="userData"></global-header>
     <column-list :list="list"></column-list>
+    <!-- 表单 -->
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        v-model="emailData.value"
+        @blur="vaildEmail"
+      />
+      <div class="form-text" v-if="emailData.errorFlag">
+        {{ emailData.message }}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
@@ -51,9 +69,22 @@ export default defineComponent({
     GlobalHeader
   },
   setup () {
+    const emailData = reactive({
+      value: '',
+      errorFlag: false,
+      message: ''
+    })
+    const vaildEmail = () => {
+      if (emailData.value === '') {
+        emailData.errorFlag = true
+        emailData.message = '邮箱不能为空'
+      }
+    }
     return {
       list: testData,
-      userData
+      userData,
+      emailData,
+      vaildEmail
     }
   }
 })
