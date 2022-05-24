@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 const Home = () => import('../views/Home.vue')
 const Login = () => import('../views/Login.vue')
-const ColumnDetail = () => import('../components/ColumnDetail.vue')
+const ColumnDetail = () => import('../views/ColumnDetail.vue')
 // 创建路由实例
 const router = createRouter({
   history: createWebHashHistory(),
