@@ -19,9 +19,11 @@ export default defineComponent({
   setup (props, context) {
     let funcArr: ValidateFunc[] = []
     const submitForm = () => {
+      // 循环执行数组 得到最后的验证结果
       const result = funcArr.map((func) => func()).every((result) => result)
       context.emit('form-submit', result)
     }
+    // 将监听得到的验证函数都存到一个数组中
     const callback = (func: any) => {
       if (func) {
         funcArr.push(func)

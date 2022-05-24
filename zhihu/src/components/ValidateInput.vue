@@ -46,6 +46,7 @@ export default defineComponent({
       inputRef.value = targetValue
       emit('update:modelValue', targetValue)
     }
+    // 数据验证
     const validateInput = () => {
       if (props.rules) {
         const allPassed = props.rules.every((item) => {
