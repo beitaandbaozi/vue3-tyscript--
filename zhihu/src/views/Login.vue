@@ -30,20 +30,28 @@
 import { defineComponent, ref } from 'vue'
 import ValidateInput, { RulesProp } from '../components/ValidateInput.vue'
 import ValidateForm from '../components/ValidateForm.vue'
-const emailRules: RulesProp = [
-  { type: 'required', message: '电子邮箱地址不能为空' },
-  { type: 'email', message: '请输入正确的电子邮箱格式' }
-]
-const passwordRules: RulesProp = [{ type: 'required', message: '请输入密码' }]
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 export default defineComponent({
   name: 'Login',
   components: { ValidateInput, ValidateForm },
   setup () {
+    const emailRules: RulesProp = [
+      { type: 'required', message: '电子邮箱地址不能为空' },
+      { type: 'email', message: '请输入正确的电子邮箱格式' }
+    ]
+    const passwordRules: RulesProp = [
+      { type: 'required', message: '请输入密码' }
+    ]
     const emailValue = ref('')
     const passwordValue = ref('')
+    const router = useRouter()
+    const store = useStore()
     const onSubmitForm = (result: boolean) => {
-      console.log(result)
-      // result的值为 true时  表示通过
+      if (result) {
+        store.commit('login')
+        router.push('/')
+      }
     }
     return {
       emailRules,

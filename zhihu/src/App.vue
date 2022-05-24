@@ -12,12 +12,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
+import GlobalHeader from './components/GlobalHeader.vue'
 import GlobalFooter from './components/GlobalFooter.vue'
-const userData: UserProps = {
-  isLogin: true,
-  name: 'BeiTa'
-}
+import { useStore } from 'vuex'
+import { GlobalDataProps } from './store'
 
 export default defineComponent({
   name: 'App',
@@ -26,6 +24,8 @@ export default defineComponent({
     GlobalFooter
   },
   setup () {
+    const store = useStore<GlobalDataProps>()
+    const userData = store.state.user
     return {
       userData
     }
