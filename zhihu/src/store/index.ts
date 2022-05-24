@@ -16,5 +16,16 @@ export default createStore<GlobalDataProps>({
       state.user = { ...state.user, isLogin: true, name: 'BeiTa' }
     }
   },
-  actions: {}
+  actions: {},
+  getters: {
+    // getColumnById:(state) => (id:number) => {
+    //   return state.columns.find(c => c.id === id)
+    // }
+    getColumnById: (state) => (payload: number) => {
+      return state.columns.find(c => c.id === payload)
+    },
+    getPostsByCid: (state) => (payload: number) => {
+      return state.posts.filter(c => c.columnId === payload)
+    }
+  }
 })
