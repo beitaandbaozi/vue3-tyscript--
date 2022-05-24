@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader from './components/GlobalHeader.vue'
 import GlobalFooter from './components/GlobalFooter.vue'
@@ -25,7 +25,7 @@ export default defineComponent({
   },
   setup () {
     const store = useStore<GlobalDataProps>()
-    const userData = store.state.user
+    const userData = computed(() => store.state.user)
     return {
       userData
     }
