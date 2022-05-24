@@ -3,6 +3,7 @@
     <!-- 头部 -->
     <global-header :user="userData"></global-header>
     <!-- 内容 -->
+    <router-view></router-view>
     <!-- 底部 -->
     <global-footer />
   </div>
