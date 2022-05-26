@@ -9,7 +9,7 @@ export default createStore<GlobalDataProps>({
   state: {
     columns: testData,
     posts: testPosts,
-    user: { isLogin: true, name: 'BeiTa', columnId: 1 }
+    user: { isLogin: false, name: 'BeiTa', columnId: 1 }
   },
   mutations: {
     login (state) {
