@@ -33,6 +33,10 @@
 import { defineComponent, ref } from 'vue'
 import ValidateForm from '../components/ValidateForm.vue'
 import ValidateInput, { RulesProp } from '../components/ValidateInput.vue'
+import { useStore } from 'vuex'
+import { GlobalDataProps } from '../store'
+import { PostProps } from '../utils/testData'
+import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'AddPost',
   components: { ValidateForm, ValidateInput },
@@ -51,8 +55,25 @@ export default defineComponent({
         message: '文章内容不能为空！'
       }
     ]
+    const store = useStore<GlobalDataProps>()
+    const router = useRouter()
     const onSubmitForm = (result: boolean) => {
-      console.log(result)
+      if (result) {
+        const { columnId } = store.state.user
+        if (columnId) {
+          const newPost: PostProps = {
+            id: new Date().getTime(),
+            title: titleValue.value,
+            content: contentValue.value,
+            columnId,
+            createdAt: new Date().toLocaleString()
+          }
+          // 新增文章
+          store.commit('createPost', newPost)
+          // 路由跳转
+          router.push(`/column/${columnId}`)
+        }
+      }
     }
     return { titleValue, contentValue, titleRules, contentRules, onSubmitForm }
   }
