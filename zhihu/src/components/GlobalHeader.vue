@@ -6,7 +6,7 @@
     <a class="navbar-brand" href="#">知乎专栏</a>
     <ul class="list-inline mb-0" v-if="!user.isLogin">
       <li class="list-inline-item">
-        <router-link to="/login" class="btn btn-success my-2">登陆</router-link>
+        <router-link to="/login" class="btn btn-success my-2">登录</router-link>
       </li>
       <li class="list-inline-item">
         <a href="#" class="btn btn-warning my-2">注册</a>

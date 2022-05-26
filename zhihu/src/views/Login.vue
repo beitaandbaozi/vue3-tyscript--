@@ -1,30 +1,34 @@
 <template>
-  <!-- 表单 -->
-  <validate-form @form-submit="onSubmitForm">
-    <!-- 邮箱 -->
-    <div class="mb-3">
-      <label class="form-label">邮箱地址</label>
-      <validate-input
-        :rules="emailRules"
-        v-model="emailValue"
-        type="text"
-        placeholder="请输入邮箱地址"
-      ></validate-input>
+  <div class="card w-50 container mb-4">
+    <div class="card-body">
+      <!-- 表单 -->
+      <validate-form @form-submit="onSubmitForm">
+        <!-- 邮箱 -->
+        <div class="mb-3">
+          <label class="form-label">邮箱地址</label>
+          <validate-input
+            :rules="emailRules"
+            v-model="emailValue"
+            type="text"
+            placeholder="请输入邮箱地址"
+          ></validate-input>
+        </div>
+        <!-- 密码 -->
+        <div class="mb-3">
+          <label class="form-label">密码</label>
+          <validate-input
+            :rules="passwordRules"
+            v-model="passwordValue"
+            type="password"
+            placeholder="请输入密码"
+          ></validate-input>
+        </div>
+        <template v-slot:submit>
+          <span class="btn btn-primary">登录</span>
+        </template>
+      </validate-form>
     </div>
-    <!-- 密码 -->
-    <div class="mb-3">
-      <label class="form-label">密码</label>
-      <validate-input
-        :rules="passwordRules"
-        v-model="passwordValue"
-        type="password"
-        placeholder="请输入密码"
-      ></validate-input>
-    </div>
-    <template v-slot:submit>
-      <span class="btn btn-primary">登录</span>
-    </template>
-  </validate-form>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
