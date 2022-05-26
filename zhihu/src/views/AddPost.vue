@@ -1,20 +1,24 @@
 <template>
   <div class="container w-50">
     <validate-form @form-submit="onSubmitForm">
-      <!-- 邮箱 -->
+      <!-- 文章标题 -->
       <div class="mb-3">
+        <label class="form-label">文章标题</label>
         <validate-input
           v-model="titleValue"
           type="text"
           placeholder="请输入标题"
         ></validate-input>
       </div>
-      <!-- 密码 -->
-      <div class="mb-3 w-20">
+      <!-- 文章内容 -->
+      <div class="mb-3">
+        <label class="form-label">文章内容</label>
         <validate-input
+          rows="10"
+          type="text"
+          tag="textarea"
           v-model="contentValue"
-          type="textarea"
-          placeholder="文字内容"
+          placeholder="请输入文章详情"
         ></validate-input>
       </div>
       <template v-slot:submit>
