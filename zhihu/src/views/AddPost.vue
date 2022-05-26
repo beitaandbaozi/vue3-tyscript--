@@ -6,6 +6,7 @@
         <label class="form-label">文章标题</label>
         <validate-input
           v-model="titleValue"
+          :rules="titleRules"
           type="text"
           placeholder="请输入标题"
         ></validate-input>
@@ -14,6 +15,7 @@
       <div class="mb-3">
         <label class="form-label">文章内容</label>
         <validate-input
+          :rules="contentRules"
           rows="10"
           type="text"
           tag="textarea"
@@ -30,17 +32,29 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import ValidateForm from '../components/ValidateForm.vue'
-import ValidateInput from '../components/ValidateInput.vue'
+import ValidateInput, { RulesProp } from '../components/ValidateInput.vue'
 export default defineComponent({
   name: 'AddPost',
   components: { ValidateForm, ValidateInput },
   setup () {
     const titleValue = ref('')
+    const titleRules: RulesProp = [
+      {
+        type: 'required',
+        message: '文章标题不能为空！'
+      }
+    ]
     const contentValue = ref('')
+    const contentRules: RulesProp = [
+      {
+        type: 'required',
+        message: '文章内容不能为空！'
+      }
+    ]
     const onSubmitForm = (result: boolean) => {
       console.log(result)
     }
-    return { titleValue, contentValue, onSubmitForm }
+    return { titleValue, contentValue, titleRules, contentRules, onSubmitForm }
   }
 })
 </script>

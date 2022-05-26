@@ -9,11 +9,14 @@ export default createStore<GlobalDataProps>({
   state: {
     columns: testData,
     posts: testPosts,
-    user: { isLogin: false }
+    user: { isLogin: true, name: 'BeiTa', columnId: 1 }
   },
   mutations: {
     login (state) {
       state.user = { ...state.user, isLogin: true, name: 'BeiTa' }
+    },
+    createPost (state, newPost) {
+      state.posts.push(newPost)
     }
   },
   actions: {},

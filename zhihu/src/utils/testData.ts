@@ -16,6 +16,7 @@ export interface UserProps {
   isLogin: boolean
   name?: string
   id?: number
+  columnId?: number
 }
 export const testData: ColumnProps[] = [
   {
