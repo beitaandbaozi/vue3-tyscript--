@@ -6,11 +6,11 @@
     >
       <div class="col-9">
         <h4>{{ column.title }}</h4>
-        <p class="text-muted">{{ column.description }}</p>
+        <p class="text-muted">{{ column.des }}</p>
       </div>
       <div class="col-3 text-center">
         <img
-          :src="column.avatar"
+          :src="column.imgUrl"
           :alt="column.title"
           class="rounded-circle border img-fluid"
         />
@@ -21,7 +21,7 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store/index'
@@ -35,6 +35,9 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore<GlobalDataProps>()
     const currentId = Number(route.params.id)
+    onMounted(() => {
+      store.dispatch('fetchColumnById', currentId)
+    })
     const column = computed(() => store.getters.getColumnById(currentId))
     const list = computed(() => store.getters.getPostsByCid(currentId))
     return {

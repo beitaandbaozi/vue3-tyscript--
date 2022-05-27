@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import { ColumnProps, PostProps, UserProps, testPosts } from '../utils/testData'
-import { getColumnList } from '../api/column'
+import { getColumnList, getColumnById } from '../api/column'
 export interface GlobalDataProps {
   columns: ColumnProps[]
   posts: PostProps[]
@@ -21,13 +21,22 @@ export default createStore<GlobalDataProps>({
     },
     fetchColumns (state, rawData) {
       state.columns = rawData.list
+    },
+    fetchColumnById (state, rawData) {
+      state.columns = [rawData.item]
     }
   },
   actions: {
-    // 获取专栏文章列表
+    // 获取全部专栏文章列表
     fetchColumns (context) {
       getColumnList().then(res => {
         context.commit('fetchColumns', res.data)
+      })
+    },
+    // 获取对应id的专栏信息
+    fetchColumnById (context, cid) {
+      getColumnById(cid).then(res => {
+        context.commit('fetchColumnById', res.data)
       })
     }
   },
