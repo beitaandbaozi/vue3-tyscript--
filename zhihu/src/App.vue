@@ -11,7 +11,6 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader from './components/GlobalHeader.vue'
 import GlobalFooter from './components/GlobalFooter.vue'
 import { useStore } from 'vuex'
