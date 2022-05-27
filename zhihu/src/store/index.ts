@@ -32,10 +32,12 @@ export default createStore<GlobalDataProps>({
   },
   actions: {
     // 获取全部专栏文章列表
-    fetchColumns (context) {
-      getColumnList().then(res => {
-        context.commit('fetchColumns', res.data)
-      })
+    async fetchColumns (context) {
+      // getColumnList().then(res => {
+      //   context.commit('fetchColumns', res.data)
+      // })
+      const { data } = await getColumnList()
+      context.commit('fetchColumns', data)
     },
     // 获取对应id的专栏信息
     fetchColumnById (context, cid) {
