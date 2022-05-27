@@ -1,22 +1,22 @@
 <template>
-  <div
-    class="d-flex justify-content-center align-items-center h-100 loading-container"
-    :style="
-       {
+  <teleport to="#model">
+    <div
+      class="d-flex justify-content-center align-items-center h-100 loading-container"
+      :style="{
         backgroundColor: background || ''
-      }
-    "
-  >
-    <div class="loading-content">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">{{ text || 'loading'}}</span>
+      }"
+    >
+      <div class="loading-content">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">{{ text || 'loading' }}</span>
+        </div>
+        <p class="text-primary small" v-if="text">{{ text }}</p>
       </div>
-      <p class="text-primary small" v-if="text">{{ text }}</p>
     </div>
-  </div>
+  </teleport>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onUnmounted } from 'vue'
 
 export default defineComponent({
   name: 'Loading',
@@ -27,6 +27,14 @@ export default defineComponent({
     background: {
       type: String
     }
+  },
+  setup () {
+    const node = document.createElement('div')
+    node.id = 'model'
+    document.body.appendChild(node)
+    onUnmounted(() => {
+      document.body.removeChild(node)
+    })
   }
 })
 </script>
