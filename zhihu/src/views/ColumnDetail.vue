@@ -37,11 +37,11 @@ export default defineComponent({
     const currentId = Number(route.params.id)
     onMounted(() => {
       store.dispatch('fetchColumnById', currentId)
+      store.dispatch('fetchPostById')
     })
     const column = computed(() => store.getters.getColumnById(currentId))
     const list = computed(() => store.getters.getPostsByCid(currentId))
     return {
-      route,
       column,
       list
     }
