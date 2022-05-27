@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
-import { ColumnProps, PostProps, UserProps, testData, testPosts } from '../utils/testData'
+import { ColumnProps, PostProps, UserProps, testPosts } from '../utils/testData'
+import { getColumnList } from '../api/column'
 export interface GlobalDataProps {
   columns: ColumnProps[]
   posts: PostProps[]
@@ -7,7 +8,7 @@ export interface GlobalDataProps {
 }
 export default createStore<GlobalDataProps>({
   state: {
-    columns: testData,
+    columns: [],
     posts: testPosts,
     user: { isLogin: false, name: 'BeiTa', columnId: 1 }
   },
@@ -17,15 +18,23 @@ export default createStore<GlobalDataProps>({
     },
     createPost (state, newPost) {
       state.posts.push(newPost)
+    },
+    fetchColumns (state, rawData) {
+      state.columns = rawData.list
     }
   },
-  actions: {},
+  actions: {
+    // 获取专栏文章列表
+    fetchColumns (context) {
+      getColumnList().then(res => {
+        context.commit('fetchColumns', res.data)
+      })
+    }
+  },
   getters: {
-    // getColumnById:(state) => (id:number) => {
-    //   return state.columns.find(c => c.id === id)
-    // }
+
     getColumnById: (state) => (payload: number) => {
-      return state.columns.find(c => c.id === payload)
+      return state.columns.find(c => c._id === payload)
     },
     getPostsByCid: (state) => (payload: number) => {
       return state.posts.filter(c => c.columnId === payload)

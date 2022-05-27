@@ -5,7 +5,9 @@
         <img src="../assets/callout.svg" alt="callout" class="w-50" />
         <h2 class="font-weight-light">随心写作，自由表达</h2>
         <p>
-          <router-link to="/create" class="btn btn-primary my-2">开始写文章</router-link>
+          <router-link to="/create" class="btn btn-primary my-2"
+            >开始写文章</router-link
+          >
         </p>
       </div>
     </div>
@@ -14,7 +16,7 @@
   <column-list :list="list"></column-list>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store/index'
 import ColumnList from '../components/ColumnList.vue'
@@ -24,7 +26,10 @@ export default defineComponent({
   components: { ColumnList },
   setup () {
     const store = useStore<GlobalDataProps>()
-    const list = store.state.columns
+    onMounted(() => {
+      store.dispatch('fetchColumns')
+    })
+    const list = computed(() => store.state.columns)
     return { list }
   }
 })
