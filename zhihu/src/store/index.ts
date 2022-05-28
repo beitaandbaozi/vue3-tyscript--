@@ -6,12 +6,14 @@ export interface GlobalDataProps {
   columns: ColumnProps[]
   posts: PostProps[]
   user: UserProps
+  loading: boolean
 }
 export default createStore<GlobalDataProps>({
   state: {
     columns: [],
     posts: [],
-    user: { isLogin: false, name: 'BeiTa', columnId: 1 }
+    user: { isLogin: false, name: 'BeiTa', columnId: 1 },
+    loading: false
   },
   mutations: {
     login (state) {
@@ -28,6 +30,9 @@ export default createStore<GlobalDataProps>({
     },
     fetchPostById (state, rowData) {
       state.posts = rowData.list
+    },
+    setLoading (state, status) {
+      state.loading = status
     }
   },
   actions: {

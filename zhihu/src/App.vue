@@ -2,7 +2,11 @@
   <div class="container">
     <!-- 头部 -->
     <global-header :user="userData"></global-header>
-    <loading text="加载中" background="rgba(0,0,0,0.8)"></loading>
+    <loading
+      text="加载中"
+      background="rgba(0,0,0,0.8)"
+      v-if="loading"
+    ></loading>
     <!-- 内容 -->
     <router-view></router-view>
     <!-- 底部 -->
@@ -28,8 +32,10 @@ export default defineComponent({
   setup () {
     const store = useStore<GlobalDataProps>()
     const userData = computed(() => store.state.user)
+    const loading = computed(() => store.state.loading)
     return {
-      userData
+      userData,
+      loading
     }
   }
 })
