@@ -2,23 +2,26 @@ import { createStore } from 'vuex'
 import { ColumnProps, PostProps, UserProps } from '../utils/testData'
 import { getColumnList, getColumnById } from '../api/column'
 import { getPostListByColumnId } from '../api/post'
+import { userLogin } from '../api/user'
 export interface GlobalDataProps {
   columns: ColumnProps[]
   posts: PostProps[]
   user: UserProps
-  loading: boolean
+  loading: boolean,
+  token: string
 }
 export default createStore<GlobalDataProps>({
   state: {
     columns: [],
     posts: [],
     user: { isLogin: false, name: 'BeiTa', columnId: 1 },
-    loading: false
+    loading: false,
+    token: ''
   },
   mutations: {
-    login (state) {
-      state.user = { ...state.user, isLogin: true, name: 'BeiTa' }
-    },
+    // login (state) {
+    //   state.user = { ...state.user, isLogin: true, name: 'BeiTa' }
+    // },
     createPost (state, newPost) {
       state.posts.push(newPost)
     },
@@ -33,6 +36,9 @@ export default createStore<GlobalDataProps>({
     },
     setLoading (state, status) {
       state.loading = status
+    },
+    setToken (state, rowData) {
+      state.token = rowData
     }
   },
   actions: {
@@ -54,6 +60,12 @@ export default createStore<GlobalDataProps>({
     fetchPostById (context) {
       getPostListByColumnId().then(res => {
         context.commit('fetchPostById', res.data)
+      })
+    },
+    // 用户登录
+    fetchUserLogin (context, data) {
+      userLogin(data).then(res => {
+        context.commit('setToken', res.data)
       })
     }
   },
