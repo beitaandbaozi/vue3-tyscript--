@@ -47,19 +47,25 @@ export default defineComponent({
     const passwordRules: RulesProp = [
       { type: 'required', message: '请输入密码' }
     ]
-    const emailValue = ref('')
-    const passwordValue = ref('')
+    const emailValue = ref('beita0527@163.com')
+    const passwordValue = ref('123456')
     const router = useRouter()
     const store = useStore()
     const onSubmitForm = (result: boolean) => {
       if (result) {
-        // store.commit('login')
+        // TODO 登录流程
+        // 1. 获取token
+        // 2. 请求头注入token
+        // 3. 获取用户信息
         const userData = {
           email: emailValue.value,
           password: passwordValue.value
         }
-        store.dispatch('fetchUserLogin', userData)
-        router.push('/')
+        store.dispatch('fetchUserLogin', userData).then(() => {
+          store.dispatch('fetchUserInfo')
+          router.push('/')
+        })
+        // store.dispatch('loginAndGetUser', userData)
       }
     }
     return {

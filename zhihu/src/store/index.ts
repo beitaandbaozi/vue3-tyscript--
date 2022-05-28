@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import { ColumnProps, PostProps, UserProps } from '../utils/testData'
 import { getColumnList, getColumnById } from '../api/column'
 import { getPostListByColumnId } from '../api/post'
-import { userLogin } from '../api/user'
+import { userLogin, userInfo } from '../api/user'
 export interface GlobalDataProps {
   columns: ColumnProps[]
   posts: PostProps[]
@@ -14,7 +14,7 @@ export default createStore<GlobalDataProps>({
   state: {
     columns: [],
     posts: [],
-    user: { isLogin: false, name: 'BeiTa', columnId: 1 },
+    user: { isLogin: false },
     loading: false,
     token: ''
   },
@@ -39,6 +39,9 @@ export default createStore<GlobalDataProps>({
     },
     setToken (state, rowData) {
       state.token = rowData
+    },
+    setUserInfo (state, rowData) {
+      state.user = { isLogin: true, ...rowData }
     }
   },
   actions: {
@@ -66,6 +69,11 @@ export default createStore<GlobalDataProps>({
     fetchUserLogin (context, data) {
       userLogin(data).then(res => {
         context.commit('setToken', res.data)
+      })
+    },
+    fetchUserInfo (context) {
+      userInfo().then(res => {
+        context.commit('setUserInfo', res.data)
       })
     }
   },

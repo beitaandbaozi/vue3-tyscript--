@@ -7,3 +7,10 @@ export function userLogin (data: any) {
     data: data
   })
 }
+// 获取用户角色
+export function userInfo () {
+  return request({
+    url: '/user/current',
+    method: 'post'
+  })
+}
