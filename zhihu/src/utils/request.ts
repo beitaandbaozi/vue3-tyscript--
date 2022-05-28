@@ -5,9 +5,16 @@ const service = axios.create({
   timeout: 100000
 })
 // 请求拦截器
-service.interceptors.request.use(config => {
+service.interceptors.request.use((config: any) => {
   store.commit('setLoading', true)
+  // token注入请求头中
+  const token = store.state.token
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config
+}, err => {
+  return Promise.reject(err)
 })
 // 响应拦截器
 service.interceptors.response.use(response => {
