@@ -3,6 +3,7 @@ import { ColumnProps, PostProps, UserProps } from '../utils/testData'
 import { getColumnList, getColumnById } from '../api/column'
 import { getPostListByColumnId } from '../api/post'
 import { userLogin, userInfo } from '../api/user'
+import axios from 'axios'
 export interface GlobalDataProps {
   columns: ColumnProps[]
   posts: PostProps[]
@@ -16,7 +17,7 @@ export default createStore<GlobalDataProps>({
     posts: [],
     user: { isLogin: false },
     loading: false,
-    token: ''
+    token: localStorage.getItem('token') || ''
   },
   mutations: {
     // login (state) {
@@ -39,6 +40,8 @@ export default createStore<GlobalDataProps>({
     },
     setToken (state, rowData) {
       state.token = rowData
+      // axios.defaults.headers.common.Authorization = `Bearer ${state.token}`
+      localStorage.setItem('token', state.token)
     },
     setUserInfo (state, rowData) {
       state.user = { isLogin: true, ...rowData }
@@ -68,7 +71,7 @@ export default createStore<GlobalDataProps>({
     // 用户登录
     fetchUserLogin (context, data) {
       userLogin(data).then(res => {
-        context.commit('setToken', res.data)
+        context.commit('setToken', res.data.token)
       })
     },
     fetchUserInfo (context) {

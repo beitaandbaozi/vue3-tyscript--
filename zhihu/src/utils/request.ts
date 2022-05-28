@@ -8,7 +8,7 @@ const service = axios.create({
 service.interceptors.request.use((config: any) => {
   store.commit('setLoading', true)
   // token注入请求头中
-  const token = store.state.token
+  const token = localStorage.getItem('token')
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
