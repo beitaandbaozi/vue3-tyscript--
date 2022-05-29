@@ -3,7 +3,6 @@ import { ColumnProps, PostProps, UserProps } from '../utils/testData'
 import { getColumnList, getColumnById } from '../api/column'
 import { getPostListByColumnId } from '../api/post'
 import { userLogin, userInfo } from '../api/user'
-import axios from 'axios'
 export interface GlobalDataProps {
   columns: ColumnProps[]
   posts: PostProps[]
@@ -76,7 +75,7 @@ export default createStore<GlobalDataProps>({
     },
     fetchUserInfo (context) {
       userInfo().then(res => {
-        context.commit('setUserInfo', res.data)
+        context.commit('setUserInfo', res.data.user)
       })
     }
   },

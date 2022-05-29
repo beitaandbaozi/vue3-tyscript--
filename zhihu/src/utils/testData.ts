@@ -14,8 +14,8 @@ export interface PostProps {
 }
 export interface UserProps {
   isLogin: boolean
-  name?: string
-  id?: number
+  username?: string
+  _id?: number
   columnId?: number
 }
 // export const testData: ColumnProps[] = [
