@@ -7,6 +7,7 @@
       background="rgba(0,0,0,0.8)"
       v-if="loading"
     ></loading>
+    <message message="Message"></message>
     <!-- 内容 -->
     <router-view></router-view>
     <!-- 底部 -->
@@ -22,13 +23,15 @@ import { useStore } from 'vuex'
 import { GlobalDataProps } from './store'
 import Loading from './components/Loading.vue'
 import axios from 'axios'
+import Message from './components/Message.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     GlobalHeader,
     GlobalFooter,
-    Loading
+    Loading,
+    Message
   },
   setup () {
     const store = useStore<GlobalDataProps>()
