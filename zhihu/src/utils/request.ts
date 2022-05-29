@@ -22,6 +22,11 @@ service.interceptors.response.use(response => {
     store.commit('setLoading', false)
   }, 1000)
   return response
+}, (e) => {
+  const { error } = e.response.data
+  store.commit('setError', { code: 0, message: error })
+  store.commit('setLoading', false)
+  return Promise.reject(error)
 })
 // 导出
 export default service

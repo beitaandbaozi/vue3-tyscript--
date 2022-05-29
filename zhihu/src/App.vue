@@ -21,6 +21,7 @@ import GlobalFooter from './components/GlobalFooter.vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from './store'
 import Loading from './components/Loading.vue'
+import axios from 'axios'
 
 export default defineComponent({
   name: 'App',
@@ -33,12 +34,12 @@ export default defineComponent({
     const store = useStore<GlobalDataProps>()
     const userData = computed(() => store.state.user)
     const loading = computed(() => store.state.loading)
+    const token = computed(() => store.state.token)
     // TODO
     // 第一次加载，判断token是否存在，并且用户还未登录
     onMounted(() => {
-      const token = localStorage.getItem('token')
-      const isLogin = store.state.user.isLogin
-      if (token && !isLogin) {
+      if (token.value && !userData.value.isLogin) {
+        axios.defaults.headers.common.Authorization = `Bearer ${token.value}`
         store.dispatch('fetchUserInfo')
       }
     })

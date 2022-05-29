@@ -3,12 +3,17 @@ import { ColumnProps, PostProps, UserProps } from '../utils/testData'
 import { getColumnList, getColumnById } from '../api/column'
 import { getPostListByColumnId } from '../api/post'
 import { userLogin, userInfo } from '../api/user'
+interface ErrorsProps {
+  message?:string,
+  code?:number
+}
 export interface GlobalDataProps {
   columns: ColumnProps[]
   posts: PostProps[]
   user: UserProps
   loading: boolean,
-  token: string
+  token: string,
+  error: ErrorsProps
 }
 export default createStore<GlobalDataProps>({
   state: {
@@ -16,7 +21,8 @@ export default createStore<GlobalDataProps>({
     posts: [],
     user: { isLogin: false },
     loading: false,
-    token: localStorage.getItem('token') || ''
+    token: localStorage.getItem('token') || '',
+    error: {}
   },
   mutations: {
     // login (state) {
@@ -44,6 +50,9 @@ export default createStore<GlobalDataProps>({
     },
     setUserInfo (state, rowData) {
       state.user = { isLogin: true, ...rowData }
+    },
+    setError (state, error) {
+      state.error = error
     }
   },
   actions: {
