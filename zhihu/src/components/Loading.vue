@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, onUnmounted } from 'vue'
-
+import useDomCreate from '../hooks/useDomCreate'
 export default defineComponent({
   name: 'Loading',
   props: {
@@ -29,12 +29,7 @@ export default defineComponent({
     }
   },
   setup () {
-    const node = document.createElement('div')
-    node.id = 'model'
-    document.body.appendChild(node)
-    onUnmounted(() => {
-      document.body.removeChild(node)
-    })
+    useDomCreate('model')
   }
 })
 </script>

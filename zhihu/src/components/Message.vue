@@ -19,6 +19,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, onUnmounted, PropType, ref } from 'vue'
+import useDomCreate from '../hooks/useDomCreate'
 type messageType =
   | 'primary'
   | 'secondary'
@@ -38,13 +39,7 @@ export default defineComponent({
   },
   emits: ['close-message'],
   setup (props, context) {
-    const node = document.createElement('div')
-    node.id = 'message'
-    document.body.appendChild(node)
-    onUnmounted(() => {
-      document.body.removeChild(node)
-    })
-
+    useDomCreate('message')
     const classObj = {
       'alert-primary': props.type === 'primary',
       'alert-secondary': props.type === 'secondary',
