@@ -36,6 +36,7 @@ import ValidateInput, { RulesProp } from '../components/ValidateInput.vue'
 import ValidateForm from '../components/ValidateForm.vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import createMessage from '../components/Message'
 export default defineComponent({
   name: 'Login',
   components: { ValidateInput, ValidateForm },
@@ -62,6 +63,7 @@ export default defineComponent({
           password: passwordValue.value
         }
         store.dispatch('fetchLoginAndUser', userData).then(() => {
+          createMessage('登录成功！', 'success')
           router.push('/')
         })
       }
