@@ -51,7 +51,7 @@ export default defineComponent({
     const passwordValue = ref('123456')
     const router = useRouter()
     const store = useStore()
-    const onSubmitForm = (result: boolean) => {
+    const onSubmitForm = async (result: boolean) => {
       if (result) {
         // TODO 登录流程
         // 1. 获取token
@@ -61,11 +61,9 @@ export default defineComponent({
           email: emailValue.value,
           password: passwordValue.value
         }
-        store.dispatch('fetchUserLogin', userData).then(() => {
-          store.dispatch('fetchUserInfo')
+        store.dispatch('fetchLoginAndUser', userData).then(() => {
           router.push('/')
         })
-        // store.dispatch('loginAndGetUser', userData)
       }
     }
     return {

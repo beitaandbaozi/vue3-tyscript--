@@ -77,6 +77,10 @@ export default createStore<GlobalDataProps>({
       userInfo().then(res => {
         context.commit('setUserInfo', res.data.user)
       })
+    },
+    async fetchLoginAndUser (context, loginData) {
+      await context.dispatch('fetchUserLogin', loginData)
+      return await context.dispatch('fetchUserInfo')
     }
   },
   getters: {
