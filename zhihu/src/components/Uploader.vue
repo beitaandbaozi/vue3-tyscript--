@@ -41,10 +41,15 @@ export default defineComponent({
     }
     const handelFileChange = (e: Event) => {
       const currentTarget = e.target as HTMLInputElement
+      // 注意这个是一个 files 列表，也就是 fileList 对象，它是一个 array-like 的 object，但是不是一个数组，它支持选择多个文件，所以它可能有多个
       if (currentTarget.files) {
         fileState.value = 'loading'
         const files = Array.from(currentTarget.files)
         const formData = new FormData()
+        // 我们拿到它的第一项，就是我们选择的文件
+        // 然后让我们来模拟表单的数据我们可以使用 FormData 对象，这是另一种针对 XHR2 设计的新数据类型。使用 FormData 能够很方便地实时以 JavaScript 创建 HTML <form>
+        // 并通过调用 append 方法为其附加了 <input> 值。
+        // 就这样我们通过 FormData 对象添加了 input 的值
         formData.append('file', files[0])
         // 连接请求
         axios
