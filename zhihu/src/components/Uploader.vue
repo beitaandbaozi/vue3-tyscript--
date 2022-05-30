@@ -35,7 +35,8 @@ export default defineComponent({
       type: Function as PropType<beforeUploadType>
     }
   },
-  setup (props) {
+  emits: ['file-uploaded'],
+  setup (props, { emit }) {
     const fileState = ref<UploadType>('ready')
     const fileInputDom = ref<null | HTMLInputElement>(null)
     const triggerUpload = () => {
@@ -69,8 +70,8 @@ export default defineComponent({
             }
           })
           .then((res) => {
-            console.log(res.data)
             fileState.value = 'success'
+            emit('file-uploaded', res.data)
           })
           .catch(() => {
             fileState.value = 'error'

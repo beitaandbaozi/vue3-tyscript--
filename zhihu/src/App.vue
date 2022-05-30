@@ -10,6 +10,7 @@
     <uploader
       action="http://127.0.0.1:8081/zhiye/api/post/create"
       :before-upload="beforeUpload"
+      @file-uploaded="fileUpload"
     ></uploader>
     <!-- 内容 -->
     <router-view></router-view>
@@ -56,10 +57,14 @@ export default defineComponent({
       }
       return isJPG
     }
+    const fileUpload = (data: any) => {
+      createMessage(`上传成功${data}`, 'success')
+    }
     return {
       userData,
       loading,
-      beforeUpload
+      beforeUpload,
+      fileUpload
     }
   }
 })
