@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { createStore } from 'vuex'
 import { ColumnProps, PostProps, UserProps } from '../utils/testData'
 import { getColumnList, getColumnById } from '../api/column'
@@ -53,6 +54,11 @@ export default createStore<GlobalDataProps>({
     },
     setError (state, error) {
       state.error = error
+    },
+    logout (state) {
+      state.token = ''
+      localStorage.removeItem('token')
+      delete axios.defaults.headers.common.Authorization
     }
   },
   actions: {

@@ -15,9 +15,13 @@
     <ul v-else class="list-inline mb-0">
       <li class="list-inline-item">
         <dropdown :title="`你好 ${user.username}`">
-          <dropdown-item><router-link to="/create" class="dropdown-item">新建文章</router-link></dropdown-item>
+          <dropdown-item
+            ><router-link to="/create" class="dropdown-item"
+              >新建文章</router-link
+            ></dropdown-item
+          >
           <dropdown-item disabled>编辑资料</dropdown-item>
-          <dropdown-item>退出登录</dropdown-item>
+          <dropdown-item><div @click="toLogout">退出登录</div></dropdown-item>
         </dropdown>
       </li>
     </ul>
@@ -28,6 +32,9 @@ import { defineComponent, PropType } from 'vue'
 import Dropdown from './Dropdown.vue'
 import DropdownItem from './DropdownItem.vue'
 import { UserProps } from '../utils/testData'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import createMessage from './Message'
 export default defineComponent({
   name: 'GlobalHeader',
   components: {
@@ -39,6 +46,16 @@ export default defineComponent({
       type: Object as PropType<UserProps>,
       required: true
     }
+  },
+  setup () {
+    const store = useStore()
+    const router = useRouter()
+    const toLogout = () => {
+      store.commit('logout')
+      createMessage('退出登录', 'success')
+      router.push('/login')
+    }
+    return { toLogout }
   }
 })
 </script>
