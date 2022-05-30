@@ -9,7 +9,7 @@
         <router-link to="/login" class="btn btn-success my-2">登录</router-link>
       </li>
       <li class="list-inline-item">
-        <a href="#" class="btn btn-warning my-2">注册</a>
+        <router-link to="/sigup" class="btn btn-primary my-2">注册</router-link>
       </li>
     </ul>
     <ul v-else class="list-inline mb-0">

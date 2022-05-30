@@ -4,6 +4,7 @@ const Home = () => import('../views/Home.vue')
 const Login = () => import('../views/Login.vue')
 const ColumnDetail = () => import('../views/ColumnDetail.vue')
 const AddPost = () => import('../views/AddPost.vue')
+const SigUp = () => import('../views/SigUp.vue')
 // 创建路由实例
 const router = createRouter({
   history: createWebHashHistory(),
@@ -33,6 +34,11 @@ const router = createRouter({
       meta: {
         requiredLogin: true
       }
+    },
+    {
+      path: '/sigup',
+      name: 'sig-up',
+      component: SigUp
     }
   ]
 })
