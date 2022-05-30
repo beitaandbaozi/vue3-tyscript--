@@ -98,6 +98,8 @@ export default defineComponent({
           const { data } = res
           createMessage(data.msg, 'success')
           router.push('/login')
+        }).catch(e => {
+          createMessage(e, 'danger')
         })
       }
     }
