@@ -70,7 +70,14 @@ export default defineComponent({
       { type: 'required', message: '密码不能为空' }
     ]
     const rePasswordRules: RulesProp = [
-      { type: 'required', message: '密码不能为空' }
+      { type: 'required', message: '重复密码不能为空' },
+      {
+        type: 'custom',
+        message: '两次密码不相同',
+        validator: () => {
+          return passwordValue.value === rePasswordValue.value
+        }
+      }
     ]
     const emailValue = ref('')
     const nickNameValue = ref('')
