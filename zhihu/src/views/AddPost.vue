@@ -1,5 +1,12 @@
 <template>
   <div class="container w-50">
+    <!-- class="d-flex align-items-center justify-content-center"  -->
+    <!-- 这个时候是直接继承到 uploader 组件中 class="file-upload"（根组件）上的 -->
+    <!-- 但是当前情况我们想要让其加入到 class="file-upload-container" 中 -->
+    <!-- 使用非props(class)继承方式  inheritAttrs:false v-bind:"$attrs" -->
+    <uploader action="" class="d-flex align-items-center justify-content-center">
+
+    </uploader>
     <validate-form @form-submit="onSubmitForm">
       <!-- 文章标题 -->
       <div class="mb-3">
@@ -37,9 +44,10 @@ import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store'
 import { PostProps } from '../utils/testData'
 import { useRouter } from 'vue-router'
+import Uploader from '@/components/Uploader.vue'
 export default defineComponent({
   name: 'AddPost',
-  components: { ValidateForm, ValidateInput },
+  components: { ValidateForm, ValidateInput, Uploader },
   setup () {
     const titleValue = ref('')
     const titleRules: RulesProp = [
