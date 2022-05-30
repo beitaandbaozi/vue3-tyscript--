@@ -19,16 +19,20 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import axios from 'axios'
 // import { createPost } from '../api/post'
 type UploadType = 'ready' | 'loading' | 'success' | 'error'
+type beforeUploadType = (file: File) => boolean
 export default defineComponent({
   name: 'Uploader',
   props: {
     action: {
       type: String,
       required: true
+    },
+    beforeUpload: {
+      type: Function as PropType<beforeUploadType>
     }
   },
   setup (props) {
@@ -43,8 +47,14 @@ export default defineComponent({
       const currentTarget = e.target as HTMLInputElement
       // 注意这个是一个 files 列表，也就是 fileList 对象，它是一个 array-like 的 object，但是不是一个数组，它支持选择多个文件，所以它可能有多个
       if (currentTarget.files) {
-        fileState.value = 'loading'
         const files = Array.from(currentTarget.files)
+        if (props.beforeUpload) {
+          const result = props.beforeUpload(files[0])
+          if (!result) {
+            return
+          }
+        }
+        fileState.value = 'loading'
         const formData = new FormData()
         // 我们拿到它的第一项，就是我们选择的文件
         // 然后让我们来模拟表单的数据我们可以使用 FormData 对象，这是另一种针对 XHR2 设计的新数据类型。使用 FormData 能够很方便地实时以 JavaScript 创建 HTML <form>
