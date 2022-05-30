@@ -14,3 +14,12 @@ export function userInfo () {
     method: 'post'
   })
 }
+
+// 注册用户
+export function sigUp (data: any) {
+  return request({
+    url: '/user/register',
+    method: 'post',
+    data: data
+  })
+}

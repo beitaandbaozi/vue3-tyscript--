@@ -50,8 +50,11 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import ValidateForm from '@/components/ValidateForm.vue'
-import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
+import ValidateForm from '../components/ValidateForm.vue'
+import ValidateInput, { RulesProp } from '../components/ValidateInput.vue'
+import { sigUp } from '../api/user'
+import createMessage from '../components/Message'
+import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'SigUp',
   components: {
@@ -83,8 +86,20 @@ export default defineComponent({
     const nickNameValue = ref('')
     const passwordValue = ref('')
     const rePasswordValue = ref('')
+    const router = useRouter()
     const onSubmitForm = (result: boolean) => {
-      console.log(result)
+      const sigUpData = {
+        email: emailValue,
+        name: nickNameValue,
+        password: passwordValue
+      }
+      if (result) {
+        sigUp(sigUpData).then((res) => {
+          const { data } = res
+          createMessage(data.msg, 'success')
+          router.push('/login')
+        })
+      }
     }
     return {
       emailValue,
