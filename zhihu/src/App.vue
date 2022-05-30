@@ -11,6 +11,7 @@
       action="http://127.0.0.1:8081/zhiye/api/post/create"
       :before-upload="beforeUpload"
       @file-uploaded="fileUpload"
+      @file-uploaded-error="fileUploadError"
     ></uploader>
     <!-- 内容 -->
     <router-view></router-view>
@@ -60,11 +61,15 @@ export default defineComponent({
     const fileUpload = (data: any) => {
       createMessage(`上传成功${data}`, 'success')
     }
+    const fileUploadError = (error: any) => {
+      createMessage(`上传失败${error}`, 'danger')
+    }
     return {
       userData,
       loading,
       beforeUpload,
-      fileUpload
+      fileUpload,
+      fileUploadError
     }
   }
 })
