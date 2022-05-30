@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import store from '../store'
 import axios from 'axios'
+import createMessage from '../components/Message'
 const Home = () => import('../views/Home.vue')
 const Login = () => import('../views/Login.vue')
 const ColumnDetail = () => import('../views/ColumnDetail.vue')
@@ -58,8 +59,8 @@ router.beforeEach((to, form, next) => {
           next()
         }
       }).catch((error) => {
-        console.log(error)
-        localStorage.removeItem('token')
+        createMessage(error, 'danger')
+        store.commit('logout')
         next('login')
       })
     } else {
