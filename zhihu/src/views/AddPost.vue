@@ -4,8 +4,22 @@
     <!-- 这个时候是直接继承到 uploader 组件中 class="file-upload"（根组件）上的 -->
     <!-- 但是当前情况我们想要让其加入到 class="file-upload-container" 中 -->
     <!-- 使用非props(class)继承方式  inheritAttrs:false v-bind:"$attrs" -->
-    <uploader action="" class="d-flex align-items-center justify-content-center">
-
+    <uploader
+      action=""
+      class="d-flex align-items-center justify-content-center bg-dark text-secondary w-100 my-4"
+    >
+      <h2>正在上传！！！</h2>
+      <template #loading>
+        <div class="d-flex align-items-center">
+          <div class="spinner-grow text-info" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <h2>正在上传！！！</h2>
+        </div>
+      </template>
+      <template #uploaded="dataProps">
+        <img :src="dataProps.uploadedData.data.url" alt=""/>
+      </template>
     </uploader>
     <validate-form @form-submit="onSubmitForm">
       <!-- 文章标题 -->
@@ -87,3 +101,15 @@ export default defineComponent({
   }
 })
 </script>
+<style>
+.file-upload-container {
+  height: 200px;
+  cursor: pointer;
+}
+.file-upload-container image {
+  width: 100%;
+  height: 100%;
+  /* background-size类似 */
+  object-fit: cover;
+}
+</style>
