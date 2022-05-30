@@ -1,15 +1,21 @@
 <template>
   <div class="file-upload">
-    <button
-      class="btn btn-primary"
-      @click.prevent="triggerUpload"
-      v-if="fileState === 'ready'"
-    >
-      点击上传
-    </button>
-    <span v-else-if="fileState === 'loading'">loading</span>
-    <span v-else-if="fileState === 'success'">success</span>
-    <span v-else>error</span>
+    <div class="file-upload-container" @click.prevent="triggerUpload">
+      <slot v-if="fileState === 'loading'" name="loading">
+        <button class="btn btn-primary" disabled>正在上传...</button>
+      </slot>
+      <!-- 具名插槽 + 作用域插槽 -->
+      <slot
+        v-else-if="fileState === 'success'"
+        name="uploaded"
+        :uploadedData="uploadedData"
+      >
+        <button class="btn btn-primary">上传成功</button>
+      </slot>
+      <slot v-else name="default">
+        <button class="btn btn-primary">点击上传</button>
+      </slot>
+    </div>
     <input
       type="file"
       class="file-input d-none"
@@ -33,12 +39,16 @@ export default defineComponent({
     },
     beforeUpload: {
       type: Function as PropType<beforeUploadType>
+    },
+    uploaded: {
+      type: Object
     }
   },
   emits: ['file-uploaded', 'file-uploaded-error'],
   setup (props, { emit }) {
     const fileState = ref<UploadType>('ready')
     const fileInputDom = ref<null | HTMLInputElement>(null)
+    const uploadedData = ref(props.uploaded)
     const triggerUpload = () => {
       if (fileInputDom.value) {
         fileInputDom.value.click()
@@ -71,11 +81,12 @@ export default defineComponent({
           })
           .then((res) => {
             fileState.value = 'success'
+            uploadedData.value = res.data
             emit('file-uploaded', res.data)
           })
-          .catch((e) => {
+          .catch((error) => {
             fileState.value = 'error'
-            emit('file-uploaded-error', e)
+            emit('file-uploaded-error', { error })
           })
           .finally(() => {
             if (fileInputDom.value) {
@@ -101,7 +112,8 @@ export default defineComponent({
       fileInputDom,
       triggerUpload,
       fileState,
-      handelFileChange
+      handelFileChange,
+      uploadedData
     }
   }
 })

@@ -12,7 +12,11 @@
       :before-upload="beforeUpload"
       @file-uploaded="fileUpload"
       @file-uploaded-error="fileUploadError"
-    ></uploader>
+    >
+      <template v-slot:uploaded="dataProps">
+        {{ dataProps.uploadedData }}
+      </template>
+    </uploader>
     <!-- 内容 -->
     <router-view></router-view>
     <!-- 底部 -->
@@ -62,7 +66,7 @@ export default defineComponent({
       createMessage(`上传成功${data}`, 'success')
     }
     const fileUploadError = (error: any) => {
-      createMessage(`上传失败${error}`, 'danger')
+      createMessage(`${error.message}`, 'danger')
     }
     return {
       userData,
