@@ -7,6 +7,7 @@
     <uploader
       action=""
       class="d-flex align-items-center justify-content-center bg-dark text-secondary w-100 my-4"
+      :before-upload="uploadCheck"
     >
       <h2>正在上传！！！</h2>
       <template #loading>
@@ -18,7 +19,7 @@
         </div>
       </template>
       <template #uploaded="dataProps">
-        <img :src="dataProps.uploadedData.data.url" alt=""/>
+        <img :src="dataProps.uploadedData.data.url" alt="" />
       </template>
     </uploader>
     <validate-form @form-submit="onSubmitForm">
@@ -58,7 +59,9 @@ import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store'
 import { PostProps } from '../utils/testData'
 import { useRouter } from 'vue-router'
-import Uploader from '@/components/Uploader.vue'
+import Uploader from '../components/Uploader.vue'
+import { beforeUploadCheck } from '../hooks/helper'
+import createMessage from '../components/Message'
 export default defineComponent({
   name: 'AddPost',
   components: { ValidateForm, ValidateInput, Uploader },
@@ -97,7 +100,21 @@ export default defineComponent({
         }
       }
     }
-    return { titleValue, contentValue, titleRules, contentRules, onSubmitForm }
+    const uploadCheck = (file: File) => {
+      const result = beforeUploadCheck(file, {
+        format: ['image/jpeg', 'image/png'],
+        size: 1
+      })
+      const { passed, error } = result
+      if (error === 'format') {
+        createMessage('上传图片只能是 JPG/PNG 格式！', 'danger')
+      }
+      if (error === 'size') {
+        createMessage('上传图片大小不能超过 1Mb！', 'danger')
+      }
+      return passed
+    }
+    return { titleValue, contentValue, titleRules, contentRules, onSubmitForm, uploadCheck }
   }
 })
 </script>
