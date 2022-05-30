@@ -6,3 +6,14 @@ export function getPostListByColumnId () {
     method: 'get'
   })
 }
+// 新建文章
+export function createPost (data: any) {
+  return request({
+    url: '/post/create',
+    method: 'post',
+    data: data,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}

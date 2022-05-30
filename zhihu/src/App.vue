@@ -7,7 +7,7 @@
       background="rgba(0,0,0,0.8)"
       v-if="loading"
     ></loading>
-    <uploader></uploader>
+    <uploader action="http://127.0.0.1:8081/zhiye/api/post/create"></uploader>
     <!-- 内容 -->
     <router-view></router-view>
     <!-- 底部 -->
