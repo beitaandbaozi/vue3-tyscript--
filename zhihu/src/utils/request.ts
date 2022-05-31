@@ -8,25 +8,20 @@ const service = axios.create({
 service.interceptors.request.use((config: any) => {
   store.commit('setLoading', true)
   // token注入请求头中
-  const token = localStorage.getItem('token')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
+  store.commit('setError', { status: false, message: '' })
   return config
 }, err => {
   return Promise.reject(err)
 })
 // 响应拦截器
-service.interceptors.response.use(response => {
-  setTimeout(() => {
-    store.commit('setLoading', false)
-  }, 1000)
-  return response
-}, (e) => {
-  const { error } = e.response.data
-  store.commit('setError', { code: 0, message: error })
+axios.interceptors.response.use(config => {
   store.commit('setLoading', false)
-  return Promise.reject(error)
+  return config
+}, e => {
+  const { error } = e.response.data
+  store.commit('setError', { status: true, message: error })
+  store.commit('setLoading', false)
+  return Promise.reject(e.response.data)
 })
 // 导出
 export default service

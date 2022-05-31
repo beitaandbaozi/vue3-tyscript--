@@ -2,11 +2,11 @@
   <div class="container">
     <!-- 头部 -->
     <global-header :user="userData"></global-header>
-    <loading
+    <!-- <loading
       text="加载中"
       background="rgba(0,0,0,0.8)"
       v-if="loading"
-    ></loading>
+    ></loading> -->
     <!-- 内容 -->
     <router-view></router-view>
     <!-- 底部 -->
@@ -20,13 +20,12 @@ import GlobalHeader from './components/GlobalHeader.vue'
 import GlobalFooter from './components/GlobalFooter.vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from './store'
-import Loading from './components/Loading.vue'
+// import Loading from './components/Loading.vue'
 export default defineComponent({
   name: 'App',
   components: {
     GlobalHeader,
-    GlobalFooter,
-    Loading
+    GlobalFooter
   },
   setup () {
     const store = useStore<GlobalDataProps>()

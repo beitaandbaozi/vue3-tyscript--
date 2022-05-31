@@ -6,7 +6,7 @@ const Home = () => import('../views/Home.vue')
 const Login = () => import('../views/Login.vue')
 const ColumnDetail = () => import('../views/ColumnDetail.vue')
 const AddPost = () => import('../views/AddPost.vue')
-const SigUp = () => import('../views/SigUp.vue')
+const SignUp = () => import('../views/SigUp.vue')
 // 创建路由实例
 const router = createRouter({
   history: createWebHashHistory(),
@@ -20,27 +20,24 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: Login,
-      meta: {
-        redirectAlreadyLogin: true
-      }
+      meta: { redirectAlreadyLogin: true }
     },
     {
-      path: '/column/:id',
-      name: 'column-detail',
-      component: ColumnDetail
+      path: '/signup',
+      name: 'signup',
+      component: SignUp,
+      meta: { redirectAlreadyLogin: true }
     },
     {
       path: '/create',
       name: 'create',
       component: AddPost,
-      meta: {
-        requiredLogin: true
-      }
+      meta: { requiredLogin: true }
     },
     {
-      path: '/sigup',
-      name: 'sig-up',
-      component: SigUp
+      path: '/column/:id',
+      name: 'column',
+      component: ColumnDetail
     }
   ]
 })

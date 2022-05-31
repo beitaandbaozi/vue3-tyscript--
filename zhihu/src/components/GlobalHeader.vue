@@ -6,10 +6,10 @@
     <a class="navbar-brand" href="#">知乎专栏</a>
     <ul class="list-inline mb-0" v-if="!user.isLogin">
       <li class="list-inline-item">
-        <router-link to="/login" class="btn btn-success my-2">登录</router-link>
+        <router-link :to="{name:'login'}" class="btn btn-success my-2">登录</router-link>
       </li>
       <li class="list-inline-item">
-        <router-link to="/sigup" class="btn btn-primary my-2">注册</router-link>
+        <router-link to="/signup" class="btn btn-primary my-2">注册</router-link>
       </li>
     </ul>
     <ul v-else class="list-inline mb-0">
