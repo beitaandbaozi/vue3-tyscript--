@@ -47,7 +47,7 @@ export default defineComponent({
   inheritAttrs: false,
   emits: ['file-uploaded', 'file-uploaded-error'],
   setup (props, { emit }) {
-    const fileState = ref<UploadType>('ready')
+    const fileState = ref<UploadType>(props.uploaded ? 'success' : 'ready')
     const fileInputDom = ref<null | HTMLInputElement>(null)
     const uploadedData = ref(props.uploaded)
     const triggerUpload = () => {

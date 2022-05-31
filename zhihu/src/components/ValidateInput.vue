@@ -6,7 +6,6 @@
       :class="{ 'is-invalid': inputRef.error, 'is-valid': validFlag }"
       v-model="inputRef.value"
       @blur="validateInput"
-      @input="updateValue"
       v-bind="$attrs"
     />
     <textarea
@@ -15,7 +14,6 @@
       :class="{ 'is-invalid': inputRef.error, 'is-valid': validFlag }"
       v-model="inputRef.value"
       @blur="validateInput"
-      @input="updateValue"
       v-bind="$attrs"
     ></textarea>
     <div class="form-text invalid-feedback" v-if="inputRef.error">
@@ -24,7 +22,14 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive, ref, onMounted } from 'vue'
+import {
+  defineComponent,
+  PropType,
+  reactive,
+  ref,
+  onMounted,
+  computed
+} from 'vue'
 import { emitter } from './ValidateForm.vue'
 const emailReg =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -52,16 +57,21 @@ export default defineComponent({
   setup (props, { emit }) {
     const validFlag = ref(false)
     const inputRef = reactive({
-      value: props.modelValue || '',
+      value: computed({
+        get: () => props.modelValue || '',
+        set: (val) => {
+          emit('update:modelValue', val)
+        }
+      }),
       error: false,
       message: ''
     })
     // 双向数据绑定
-    const updateValue = (e: Event) => {
-      const targetValue = (e.target as HTMLInputElement).value
-      inputRef.value = targetValue
-      emit('update:modelValue', targetValue)
-    }
+    // const updateValue = (e: Event) => {
+    //   const targetValue = (e.target as HTMLInputElement).value
+    //   inputRef.value = targetValue
+    //   emit('update:modelValue', targetValue)
+    // }
     // 数据验证
     const validateInput = () => {
       if (props.rules) {
@@ -92,7 +102,7 @@ export default defineComponent({
     onMounted(() => {
       emitter.emit('form-item-created', validateInput)
     })
-    return { inputRef, validateInput, validFlag, updateValue }
+    return { inputRef, validateInput, validFlag }
   }
 })
 </script>
